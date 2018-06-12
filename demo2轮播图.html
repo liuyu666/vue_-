@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+	<style>
+		img{
+			height:200px;
+			width: 500px
+		}
+	</style>
+</head>
+<body>
+	<div id = "app">
+		<img v-bind:src="image" /><!-- 显示一张图片 -->
+		<ul>
+			<li v-for="(item,index) in arr" v-on:click="lick(item)"> 第{{index+1}}张</li><!-- 遍历一个数组，拿到索引值和所对应的数据，在js中处理 -->
+		</ul>
+		<button v-on:click="prev" :class="{btn:isActive}">上一张</button><!-- 绑定class属性，要用数组对象的形式 -->
+		<button v-on:click="next" :style="{background:color}">下一张</button><!-- 绑定style样式，要用数组对象的形式 -->
+	</div>
+	<script>
+		var app = new Vue({//创建vue实例
+			el:"#app",
+			data:{//数据
+				image:"timg (1).jpg",
+				message:"你好",
+				arr:["timg (1).jpg","timg (2).jpg","timg (3).jpg","timg (4).jpg","timg.jpg"],
+				currIndex:0,
+				color:"red",
+				isActive:true
+			},
+			methods: {//处理函数
+			    lick: function (img) {
+			     	this.image = img//this.之后加变量，可以访问到这个id下的所有值
+			    },
+			    prev:function(){//点击前一张
+			    	this.currIndex--;
+			    	if(this.currIndex<0){
+			    		this.currIndex=4
+			    	}
+			    	this.image = this.arr[this.currIndex];
+			    },
+			    next:function(){//点击后一张
+			    	this.currIndex++;
+			    	if(this.currIndex>4){
+			    		this.currIndex=0
+			    	};
+			    	this.image = this.arr[this.currIndex];
+			    },
+			}
+		})
+	</script>
+</body>
+</html>
